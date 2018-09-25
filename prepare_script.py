@@ -4,8 +4,6 @@ import numpy as np
 import scipy.stats.stats as stats
 from scipy.stats import chi2
 
-from sklearn.preprocessing import Imputer
-
 
 #定义分箱函数（spearman）
 def mono_bin(y,x,n=2):
