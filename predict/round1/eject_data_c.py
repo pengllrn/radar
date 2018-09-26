@@ -54,10 +54,12 @@ for i in varlist:
 	target="target"
 	a=ps.chiMerge_minChiSquare(ps.calc_chiSquare(variance,data_fs_tryx),maxInterval=5)
 	cutoffs=a[variance]
+
 	data_fs_tryx["bining"+variance]=data_fs_tryx[variance].map(lambda x:value2grp(x,a[variance].tolist()))
 	iv=ps.calIV(data_fs_tryx,"bining_"+variance,target)
 	iv.to_csv("F:\\suqingsong\\logistic\\launch\\round1\\iv_r1.csv",index=False,mode="a")
 
+#辅助函数
 ##将变量转化为相应的组
 def value2grp(x,cutoffs):
 	cutoffs=sorted(cutoffs)
@@ -71,3 +73,19 @@ def value2grp(x,cutoffs):
 			return a[variance][i]
 		if x==cutoffs[i]:
 			return a[variance][i]
+list2=['zm0_bzgf1_scgl_ratio','zm0_bzgf2_scgl_ratio','zm0_bzgf2_zmgr_ratio','zm0_gr','zm0_gr_ratio']
+
+data_fs_try2=data_fs_try2.drop(list2,axis=1)
+##再次去除23个变量，目前剩下76个变量
+
+#第二次相关性检验
+corfs_3=data_fs.corr()
+corfs_3.to_csv("F:\\suqingsong\\logistic\\launch\\round1\\corfs_3.csv")
+
+##检查corfs_3，去掉没有关联的变量
+#去掉30个变量
+list3=['tdbh_ratio','cgwd_min','cgwd_max','fpga_max','id6_apavg_ma_3']
+data_fs_try2=data_fs_try2.drop(list3,axis=1)
+
+#保存文件
+data_fs_try2.to_csv("F:\\suqingsong\\logistic\\launch\\round1\\fs_data1.csv",index=False)
